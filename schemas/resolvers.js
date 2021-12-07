@@ -5,6 +5,13 @@ const resolvers = {
     users() {
       return users
     }
+  },
+  Mutation: {
+    addUser(parent, args) {
+      const newUser = args;
+      users.push(newUser);
+      return newUser;
+    }
   }
 };
 
