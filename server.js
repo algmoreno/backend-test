@@ -1,5 +1,6 @@
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
+const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core');
 const { typeDefs } = require('./schemas');
 const { resolvers } = require('./schemas');
 
@@ -7,7 +8,12 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 async function startServer() {
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({ 
+    typeDefs, 
+    resolvers,
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    playground: true
+  });
 
   await server.start();  
   server.applyMiddleware({ app });
