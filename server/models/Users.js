@@ -8,5 +8,9 @@ const UserSchema = new mongooseSchema({
   lastName: {
     type: String,
     required: true
+  },
+  age: {
+    type: Number,
+    required: true
   }
 })
