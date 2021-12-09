@@ -6,7 +6,7 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
-    userName: String
+    username: String
     age: Int
   }
 
@@ -16,13 +16,8 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, 
-      userName: String!,
-      age: Int!): User!{
-        firstName: String
-        lastName: String
-        userName: String
-        age: Int
-      }
+      username: String!,
+      age: Int!): User!
   }
 `
 

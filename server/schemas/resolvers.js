@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const User  = require('../models');
 
 const resolvers = {
   Query: {
@@ -7,13 +7,16 @@ const resolvers = {
       .select('-__v -password')
       .populate('firstName')
       .populate('lastName')
-      .populate('userName')
+      .populate('username')
       .populate('age')
     }
   },
   Mutation: {
-    addUser(parent, args) => {
-      const 
+    addUser: async (parent, args) => {
+      const user = await User.create(args)
+      return { user };
     }
   }
-}
+};
+
+module.exports = resolvers; 
