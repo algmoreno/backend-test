@@ -1,4 +1,4 @@
-const User  = require('../models');
+const { User, Post }  = require('../models');
 
 const resolvers = {
   Query: {
@@ -9,6 +9,12 @@ const resolvers = {
       .populate('lastName')
       .populate('username')
       .populate('age')
+    },
+    posts: async () => {
+      return await Post.find()
+      .select('-__v')
+      .populate('user')
+      .populate('postText')
     }
   },
   Mutation: {
@@ -25,6 +31,15 @@ const resolvers = {
       const user = await User.findOneAndDelete({ _id: _id}, {new: true})
       return user;
     },
+    addPost: async (parent, args) => {
+      const post = await Post.create(args);
+
+      await User.findOneAndUpdate(
+          { _id: args.user },
+          { $push: { posts: post._id } });
+
+      return post;
+  },
   }
 };
 

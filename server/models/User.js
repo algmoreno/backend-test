@@ -18,7 +18,13 @@ const userSchema = new Schema(
   age: {
     type: Number,
     required: true
-  }
+  },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post"
+    }
+  ]
 })
 
 const User = mongoose.model("User", userSchema);

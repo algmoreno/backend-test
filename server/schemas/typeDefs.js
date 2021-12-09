@@ -8,18 +8,28 @@ const typeDefs = gql`
     lastName: String
     username: String
     age: Int
+    posts: [Post]
+  }
+
+  type Post
+  {
+    _id: ID
+    user: User
+    postText: String
   }
 
   type Query {
     users: [User]
+    posts: [Post]
   }
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, 
       username: String!,
       age: Int!): User!
-      editUser(_id: ID!, firstName: String, lastName: String, username: String, age: Int): User!
-      removeUser(_id: ID!): User!
+    editUser(_id: ID!, firstName: String, lastName: String, username: String, age: Int): User!
+    removeUser(_id: ID!): User!
+    addPost(postText: String!, user: ID!): Post!
   }
 `
 
