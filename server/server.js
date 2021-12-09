@@ -16,7 +16,7 @@ const app = express();
 server.applyMiddleWare({ app })
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json()); 
 
 app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}`)
