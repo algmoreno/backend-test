@@ -14,8 +14,12 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args)
-      return { user };
-    }
+      return user;
+    },
+    removeUser: async (parent, {_id}) => {
+      const user = await User.findOneAndDelete({ _id: _id}, {new: true})
+      return user;
+  },
   }
 };
 

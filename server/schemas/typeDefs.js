@@ -18,6 +18,8 @@ const typeDefs = gql`
     addUser(firstName: String!, lastName: String!, 
       username: String!,
       age: Int!): User!
+      editUser(_id: ID!, firstName: String, lastName: String, username: String, age: Int): User
+      removeUser(_id: ID!): User
   }
 `
 
