@@ -16,10 +16,15 @@ const resolvers = {
       const user = await User.create(args)
       return user;
     },
+    editUser: async (parent, args) => {
+      const user = await User.findOneAndUpdate({_id: args._id}, { firstName: args.firstName, lastName: args.lastName, username: args.username, age: args.age }, {new: true});
+      await user.save();
+      return user;
+    },
     removeUser: async (parent, {_id}) => {
       const user = await User.findOneAndDelete({ _id: _id}, {new: true})
       return user;
-  },
+    },
   }
 };
 
