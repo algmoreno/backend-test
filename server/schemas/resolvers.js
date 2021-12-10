@@ -5,16 +5,11 @@ const resolvers = {
     users: async () => {
       return await User.find()
       .select('-__v -password')
-      .populate('firstName')
-      .populate('lastName')
-      .populate('username')
-      .populate('posts')
+      .populate({ path: "posts", populate: "postText" })
     },
-    posts: async () => {
-      return await Post.find()
-      .select('-__v')
-      .populate('user')
-      .populate('postText')
+    posts: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Post.find(params) 
     }
   },
   Mutation: {
@@ -31,12 +26,13 @@ const resolvers = {
       const user = await User.findOneAndDelete({ _id: _id}, {new: true})
       return user;
     },
-    addPost: async (parent, args) => {
+    addPost: async (parent, args, context) => {
       const post = await Post.create(args);
 
       await User.findOneAndUpdate(
           { _id: args.user },
-          { $push: { posts: post._id } });
+          { $push: { posts: post._id } }),
+          { new: true }
 
       return post;
   },
