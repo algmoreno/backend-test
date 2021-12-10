@@ -8,7 +8,7 @@ const resolvers = {
       .populate('firstName')
       .populate('lastName')
       .populate('username')
-      .populate('age')
+      .populate('posts')
     },
     posts: async () => {
       return await Post.find()

@@ -14,19 +14,18 @@ const typeDefs = gql`
   type Post
   {
     _id: ID
-    user: User
+    user: [User]
     postText: String
   }
 
   type Query {
     users: [User]
-    posts: [Post]
+    posts(username: String): [Post]
   }
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, 
-      username: String!,
-      age: Int!): User!
+      username: String!): User!
     editUser(_id: ID!, firstName: String, lastName: String, username: String, age: Int): User!
     removeUser(_id: ID!): User!
     addPost(postText: String!, user: ID!): Post!
