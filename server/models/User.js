@@ -16,7 +16,12 @@ const userSchema = new Schema(
     type: String,
     required: true
   },
-  posts: [Post.schema]
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Post'
+    }
+  ]
 })
 
 const User = mongoose.model("User", userSchema);
