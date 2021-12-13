@@ -2,14 +2,22 @@ const { User, Post }  = require('../models');
 
 const resolvers = {
   Query: {
+    user: async (parent, { _id }) => {
+      return await User.findById(_id).populate("posts")
+    },
     users: async () => {
       return await User.find()
       .select('-__v -password')
-      .populate({ path: "posts", populate: "postText" })
+      .populate("posts")
     },
-    posts: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Post.find(params) 
+    post: async (parent, { _id }) => {
+      return await Post.findById(_id).populate({ path: "user", populate: "username"})
+    },
+    posts: async (parent, { user }) => {
+      const params = {};
+      if (user) 
+        params.user = user;
+      return await Post.find(params).populate({ path: "user", populate: "username"})
     }
   },
   Mutation: {

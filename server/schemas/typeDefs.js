@@ -19,8 +19,10 @@ const typeDefs = gql`
   }
 
   type Query {
+    user(_id: ID!): User
     users: [User]
-    posts(username: String): [Post]
+    post(_id: ID!): Post
+    posts(user: ID!): [Post]
   }
 
   type Mutation {
