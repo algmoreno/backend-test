@@ -8,16 +8,14 @@ const resolvers = {
     users: async () => {
       return await User.find()
       .select('-__v -password')
-      .populate("posts")
+      .populate("posts");
     },
     post: async (parent, { _id }) => {
-      return await Post.findById(_id).populate({ path: "user", populate: "username"})
+      return await Post.findById(_id)
     },
-    posts: async (parent, { user }) => {
-      const params = {};
-      if (user) 
-        params.user = user;
-      return await Post.find(params).populate({ path: "user", populate: "username"})
+    posts: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Post.find(params).sort({ createdAt: -1 });
     }
   },
   Mutation: {
