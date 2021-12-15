@@ -6,9 +6,9 @@ const resolvers = {
       return await User.findById(_id).populate("posts")
     },
     users: async () => {
-      return await User.find()
+      return User.find()
       .select('-__v -password')
-      .populate("posts");
+      .populate('posts');
     },
     post: async (parent, { _id }) => {
       return await Post.findById(_id)
@@ -33,14 +33,17 @@ const resolvers = {
       return user;
     },
     addPost: async (parent, args, context) => {
-      const post = await Post.create(args);
+      if (context.user) {
+        const post = await Post.create({ ...args, username: context.user.username });
 
-      await User.findOneAndUpdate(
-          { _id: args.user },
-          { $push: { posts: post._id } }),
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { posts : post._id } },
           { new: true }
+        );
 
-      return post;
+        return post;
+      }
   },
   }
 };

@@ -14,7 +14,7 @@ const typeDefs = gql`
   type Post
   {
     _id: ID
-    user: [User]
+    username: String
     postText: String
   }
 
@@ -22,7 +22,7 @@ const typeDefs = gql`
     user(_id: ID!): User
     users: [User]
     post(_id: ID!): Post
-    posts(user: ID!): [Post]
+    posts(username: String): [Post]
   }
 
   type Mutation {
@@ -30,7 +30,7 @@ const typeDefs = gql`
       username: String!): User!
     editUser(_id: ID!, firstName: String, lastName: String, username: String, age: Int): User!
     removeUser(_id: ID!): User!
-    addPost(postText: String!, user: ID!): Post!
+    addPost(postText: String!): Post
   }
 `
 
